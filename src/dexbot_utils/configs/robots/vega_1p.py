@@ -4,7 +4,11 @@ from dataclasses import dataclass, field
 
 from dexmate_urdf import robots
 
-from ..components.sensors.cameras import ZedXCameraConfig, ZedXOneCameraConfig
+from ..components.sensors.cameras import (
+    CameraConfig,
+    ZedXCameraConfig,
+    ZedXOneCameraConfig,
+)
 from ..components.sensors.imu import ZedIMUConfig
 from ..components.sensors.lidar import Lidar3DConfig
 from ..components.vega_1 import (
@@ -52,6 +56,28 @@ class Vega1pConfig(BaseRobotConfig):
             "lidar_3d_back": Lidar3DConfig(name="lidar_3d_back"),
             "left_wrist_camera": ZedXOneCameraConfig(side="left"),
             "right_wrist_camera": ZedXOneCameraConfig(side="right"),
+            # USB base cameras are missing from stock config. Dexcontrol resolves config from dexbot-utils config, so need to include here so Dexcontrol sees and enables them.
+            # By default, cameras disabled, so adding here doesn't affect default behavior.
+            "base_front_camera": CameraConfig(
+                name="base_front_camera",
+                topic="sensors/base_front_camera/rgb",
+                rtc_channel="sensors/base_front_camera/rgb_rtc",
+            ),
+            "base_back_camera": CameraConfig(
+                name="base_back_camera",
+                topic="sensors/base_back_camera/rgb",
+                rtc_channel="sensors/base_back_camera/rgb_rtc",
+            ),
+            "base_left_camera": CameraConfig(
+                name="base_left_camera",
+                topic="sensors/base_left_camera/rgb",
+                rtc_channel="sensors/base_left_camera/rgb_rtc",
+            ),
+            "base_right_camera": CameraConfig(
+                name="base_right_camera",
+                topic="sensors/base_right_camera/rgb",
+                rtc_channel="sensors/base_right_camera/rgb_rtc",
+            ),
         }
     )
 
